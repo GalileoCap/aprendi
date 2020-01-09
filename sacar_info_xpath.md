@@ -20,9 +20,28 @@ Y le puedo pedir informacion como la clase, el texto, los nodes hijo y padres, e
 function getElementByXPath(path) {
  return document.evaluate(path, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 }
-var tienenHola= getElementByXPath('//*[text()[contains(.,"Hola")]]');
-var unHola= tienenHola.iterateNext();
-var a= unHola.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement; //El texto con el 'Hola' esta metido dentro de muchos nodes hasta llegar al del mensaje entero.
-var b= a.classList[0];
-var c= document.getElementsByClassName(b); //Ahora, dentro de C tengo todos los mensajes
+
+function sortMessages(messages) {
+    var r= {
+      out:[],
+      in:[],
+    }
+    
+    for (var message of messages) {
+        var class_name= message.className;
+        if (class_name.includes('message-in')) {
+            r.in.push(message);
+        } else if (class_name.includes('message-out')) {
+            r.out.push(message);
+        }
+    }
+    
+    return r
+}
+
+var tienen_hola= getElementByXPath('//*[text()[contains(.,"Hola")]]');
+var un_hola= tienen_hola.iterateNext();
+var message_class= un_hola.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.classList[0]; //El texto con el 'Hola' esta metido dentro de muchos nodes hasta llegar al del mensaje entero.
+var unsorted_messages= document.getElementsByClassName(message_class); //Ahora, dentro de message tengo todos los mensajes
+var sorted_messages= sortMessages(unsorted_messages);
 ```
