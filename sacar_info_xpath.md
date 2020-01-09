@@ -23,6 +23,6 @@ function getElementByXPath(path) {
 var tienenHola= getElementByXPath('//*[text()[contains(.,"Hola")]]');
 var unHola= tienenHola.iterateNext();
 var a= unHola.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement; //El texto con el 'Hola' esta metido dentro de muchos nodes hasta llegar al del mensaje entero.
-var b= a.classList[2];
+var b= a.classList[0];
 var c= document.getElementsByClassName(b); //Ahora, dentro de C tengo todos los mensajes
 ```
